@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter-Strike 1.6 - Descarga Oficial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #050505;
+            background-image: url('https://i.postimg.cc/P54JdTV4/descarga.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1;
+        }
+
+        header, main, footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            padding: 20px 40px;
+        }
+
+        .cs-logo-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #e60000;
+            padding: 8px 30px 8px 15px;
+            transform: skewX(-15deg);
+            border-top: 2px solid #ffffff;
+            border-right: 2px solid #ffffff;
+            box-shadow: 6px 6px 0px #1a53ff;
+        }
+
+        .cs-logo-banner > * {
+            transform: skewX(15deg);
+        }
+
+        .cs-icon {
+            width: 28px;
+            height: 28px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #ff9900;
+            font-family: sans-serif;
+            border: 1px solid #ff9900;
+        }
+
+        .cs-logo-text {
+            font-family: 'Teko', sans-serif;
+            font-size: 28px;
+            text-transform: lowercase;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 10px 10% 40px 10%;
+            gap: 15px;
+        }
+
+        .main-title-box {
+            background: #ffffff;
+            padding: 4px;
+            transform: skewX(-15deg);
+            box-shadow: 8px 8px 0px #e60000;
+            margin-bottom: 5px;
+        }
+
+        .main-title-inner {
+            background: #0d0d0d;
+            padding: 10px 40px;
+            border: 2px solid #ffffff;
+        }
+
+        .main-title-text {
+            font-family: 'Teko', sans-serif;
+            font-size: 55px;
+            text-transform: lowercase;
+            letter-spacing: 2px;
+            line-height: 1;
+            transform: skewX(15deg);
+            color: #fff;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+        }
+
+        .cs-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #e60000;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Teko', sans-serif;
+            font-size: 32px;
+            padding: 6px 50px;
+            transform: skewX(-15deg);
+            border-top: 2px solid #ffffff;
+            border-right: 2px solid #ffffff;
+            box-shadow: 6px 6px 0px #1a53ff;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            user-select: none;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .cs-btn span {
+            transform: skewX(15deg);
+            display: block;
+        }
+
+        .cs-btn:hover {
+            background: #ff1a1a;
+            box-shadow: 8px 8px 0px #3366ff;
+            transform: skewX(-15deg) translate(-2px, -2px);
+        }
+
+        .cs-btn:active {
+            transform: skewX(-15deg) translate(2px, 2px);
+            box-shadow: 2px 2px 0px #1a53ff;
+        }
+
+        .cs-btn-sub {
+            font-size: 22px;
+            padding: 4px 30px;
+            margin-top: 15px;
+            background: #1a53ff;
+            box-shadow: 4px 4px 0px #e60000;
+        }
+
+        .cs-btn-sub:hover {
+            background: #3366ff;
+            box-shadow: 6px 6px 0px #ff1a1a;
+        }
+
+        .info-panel {
+            display: none;
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid #e60000;
+            padding: 20px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 6px 6px 0px #1a53ff;
+            margin-top: 5px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .info-panel.active {
+            display: block;
+        }
+
+        .info-panel h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 28px;
+            color: #e60000;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 4px;
+        }
+
+        .submenu-nav {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #1a1a1a;
+            color: #aaa;
+            border: 1px solid #444;
+            padding: 6px 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            border-color: #e60000;
+        }
+
+        .tab-btn.active {
+            background: #e60000;
+            color: #fff;
+            border-color: #ffffff;
+            box-shadow: 3px 3px 0px #1a53ff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .cfg-code-box {
+            background: #000;
+            border: 1px solid #333;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 180px;
+            overflow-y: auto;
+            color: #00ff00;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .steam-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #1a53ff;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .steam-code {
+            font-family: monospace;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff9900;
+            letter-spacing: 2px;
+        }
+
+        .server-group {
+            margin-top: 15px;
+        }
+
+        .server-group h4 {
+            font-family: 'Teko', sans-serif;
+            font-size: 22px;
+            color: #ff9900;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .server-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 10px;
+            margin-bottom: 6px;
+            border-left: 3px solid #e60000;
+            font-family: monospace;
+            font-size: 15px;
+            gap: 10px;
+        }
+
+        .server-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 6px;
+            text-transform: uppercase;
+            border-radius: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-publico {
+            background: #ff9900;
+            color: #000;
+        }
+
+        .tag-dm {
+            background: #8a2be2;
+            color: #fff;
+        }
+
+        .tag-onlemap {
+            background: #e60000;
+            color: #fff;
+        }
+
+        .copy-btn {
+            background: #1a53ff;
+            color: #fff;
+            border: none;
+            padding: 4px 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: #3366ff;
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <header>
+        <div class="cs-logo-banner">
+            <div class="cs-icon">λ</div>
+            <div class="cs-logo-text">counter strike 1.6</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-title-box">
+            <div class="main-title-inner">
+                <div class="main-title-text">counter strike 1.6</div>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <!-- BOTÓN DESCARGAR JUEGO -->
+            <a href="https://download2391.mediafire.com/o99k7wotcd4gvSK7rGMbWtqIFKHqQkzkas8Psvmv4UikzDhgeT0ZP_rJ0lIeFC-NI1nkH06kdmLU4UllXDMvGtT0Ua51cyBk8gpogsf4EcyXvQJj-zqj13L9c_nx5fcZgY2i-uUhpu0tX9EnGj0ZLfegw1nY91CSowsSvZQAaSA/qu6tag1gnu5v82y/Counter-Strike-Full.zip" download class="cs-btn" id="btn-descargar">
+                <span>DESCARGAR JUEGO</span>
+            </a>
+
+            <!-- BOTÓN DISCORD -->
+            <a href="https://discord.gg/X6BcvRNw58" target="_blank" class="cs-btn">
+                <span>DISCORD</span>
+            </a>
+
+            <!-- BOTÓN SERVIDORES -->
+            <button class="cs-btn" onclick="togglePanel('serversPanel')">
+                <span>SERVIDORES</span>
+            </button>
+
+            <!-- PANEL DESPLEGABLE DE SERVIDORES CON TAGS -->
+            <div class="info-panel" id="serversPanel">
+                <h3>SERVIDORES OFICIALES</h3>
+                
+                <div class="server-group">
+                    <h4>BRAKING GAMING</h4>
+                    <div class="server-item">
+                        <div class="server-info">
+                            <span>45.235.98.66:27038</span>
+                            <span class="tag tag-publico">PÚBLICO</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyIp('connect 45.235.98.66:27038', this)">COPIAR</button>
+                    </div>
+                    <div class="server-item">
+                        <div class="server-info">
+                            <span>45.235.98.66:27028</span>
+                            <span class="tag tag-dm">DEATHMATCH</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyIp('connect 45.235.98.66:27028', this)">COPIAR</button>
+                    </div>
+                </div>
+
+                <div class="server-group">
+                    <h4>ARGENTINA CS</h4>
+                    <div class="server-item">
+                        <div class="server-info">
+                            <span>45.235.98.59:27015</span>
+                            <span class="tag tag-onlemap">24/7 DUST2</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyIp('connect 45.235.98.59:27015', this)">COPIAR</button>
+                    </div>
+                    <div class="server-item">
+                        <div class="server-info">
+                            <span>45.235.98.50:27015</span>
+                            <span class="tag tag-onlemap">SOLO MAPA</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyIp('connect 45.235.98.50:27015', this)">COPIAR</button>
+                    </div>
+                    <div class="server-item">
+                        <div class="server-info">
+                            <span>45.235.98.61:27019</span>
+                            <span class="tag tag-onlemap">SOLO MAPA</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyIp('connect 45.235.98.61:27019', this)">COPIAR</button>
+                    </div>
+                    <div class="server-item">
+                        <div class="server-info">
+                            <span>45.235.98.66:27015</span>
+                            <span class="tag tag-onlemap">SOLO MAPA</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyIp('connect 45.235.98.66:27015', this)">COPIAR</button>
+                    </div>
+                    <div class="server-item">
+                        <div class="server-info">
+                            <span>45.235.98.67:27015</span>
+                            <span class="tag tag-publico">PÚBLICO</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyIp('connect 45.235.98.67:27015', this)">COPIAR</button>
+                    </div>
+                    <div class="server-item">
+                        <div class="server-info">
+                            <span>45.235.98.59:27025</span>
+                            <span class="tag tag-dm">DEATHMATCH</span>
+                        </div>
+                        <button class="copy-btn" onclick="copyIp('connect 45.235.98.59:27025', this)">COPIAR</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTÓN EXTRAS -->
+            <button class="cs-btn" onclick="togglePanel('extrasPanel')">
+                <span>EXTRAS</span>
+            </button>
+
+            <!-- PANEL DESPLEGABLE DE EXTRAS CON SUBMENÚ -->
+            <div class="info-panel" id="extrasPanel">
+                <h3>RECURSOS Y COMPLEMENTOS</h3>
+                
+                <!-- SUBMENÚ / NAVEGACIÓN POR PESTAÑAS -->
+                <div class="submenu-nav">
+                    <button class="tab-btn active" onclick="switchTab('tabArmas', this)">PACK MODELOS</button>
+                    <button class="tab-btn" onclick="switchTab('tabFullCfg', this)">CFG DEFINITIVA (POTATO + AIM)</button>
+                </div>
+
+                <!-- SUBMENÚ 1: PACK DE MODELOS -->
+                <div class="tab-content active" id="tabArmas">
+                    <p>Este pack contiene un pack de cuchillos y las armas default del Counter-Strike por si llegás a tener que reinstalar los modelos por defecto del juego.</p>
+                    <div style="text-align: right;">
+                        <a href="https://download1640.mediafire.com/6v5wyjhcdvngFuDXBbua4FpcLOcIp7FqhhyeCycIMyVFMxEIaDvAy_szfNm3Sv1fOLcHRmQtf-Uo4lpDKqMFoYwlkygFQxez6jY0CJnqJI1-BcSnMRk3JhCU6uQAgtGnNcUncTfUeNKy8yH33g6zDP0NJYFdO43P298jxiDgStA/it6nazm20hpdofe/completementos.7z" download class="cs-btn cs-btn-sub">
+                            <span>DESCARGAR PACK</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SUBMENÚ 2: CFG COMPLETA UNIFICADA -->
+                <div class="tab-content" id="tabFullCfg">
+                    <p>Configuración unificada que combina máxima optimización de FPS (Potato) junto con los mejores rates y registro de disparos (Aim). Podés copiar los comandos o descargar el archivo <code>joako.cfg</code> directamente.</p>
+                    <div class="cfg-code-box" id="boxFullCfg">// --- RENDIMIENTO Y MÁXIMOS FPS (POTATO) ---
+fps_max "99.5"
+fps_override "1"
+developer "0"
+gl_picmip "2"
+gl_playermip "2"
+r_decals "0"
+mp_decals "0"
+max_shells "0"
+max_smokepuffs "0"
+fastsprites "2"
+cl_weather "0"
+r_dynamic "0"
+r_drawviewmodel "1"
+r_mirroralpha "0"
+gl_round_down "3"
+gl_texturemode "GL_NEAREST_MIPMAP_NEAREST"
+gl_smoothmodels "0"
+gl_keeptables "0"
+gl_wateramp "0"
+gl_cull "1"
+gl_affinemodels "0"
+cl_minmodels "1"
+cl_shadows "0"
+cl_himodels "0"
+cl_particlefx "0"
+viewsize "120"
+
+// --- RATES, PREDICCIÓN Y REGISTRO DE DISPAROS (AIM) ---
+rate "20000"
+cl_cmdrate "101"
+cl_updaterate "101"
+ex_interp "0.05"
+cl_cmdbackup "2"
+cl_resend "6"
+cl_dlmax "128"
+hud_fastswitch "1"
+cl_lc "1"
+cl_lw "1"
+cl_pitchspeed "225"
+cl_yawspeed "210"
+
+// --- MENSAJE DE CONFIRMACIÓN ---
+echo ""
+echo "=========================================="
+echo "=== CFG DEFINITIVA CARGADA CON ÉXITO ==="
+echo "=========================================="
+echo ""</div>
+                    <div class="action-bar">
+                        <button class="copy-btn" style="font-size: 14px; padding: 6px 15px;" onclick="copyCfg('boxFullCfg', this)">COPIAR CFG</button>
+                        <a href="https://download1589.mediafire.com/2uu8j1kqn6tgNQLGMLMOQolZQP9Tgh1INsoxBO7rLmho54rxXPZ1ImnT75eJMcvTM6ug3Le2dQvtyGAjE1e5W6XpyAZZa1KzyhV00K5iZ_L-Pfxcij2Sc83HID-P6b0OQxODLWn6pV17xONXjrQz2HucUHK8mrH_CCDzG13q9F4/bqubi7zxyv3urd2/joako.cfg" download class="cs-btn cs-btn-sub" style="margin-top: 0;">
+                            <span>DESCARGAR CFG</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTÓN STEAM -->
+            <button class="cs-btn" onclick="togglePanel('steamPanel')">
+                <span>STEAM</span>
+            </button>
+
+            <!-- PANEL DESPLEGABLE DE STEAM -->
+            <div class="info-panel" id="steamPanel">
+                <h3>AGREGAR EN STEAM</h3>
+                <p>Copiá mi código de amigo para agregarme directamente en la app de Steam:</p>
+                <div class="steam-box">
+                    <div>
+                        <div style="font-size: 12px; color: #aaa;">CÓDIGO DE AMIGO:</div>
+                        <div class="steam-code">818380804</div>
+                    </div>
+                    <button class="copy-btn" onclick="copyIp('818380804', this)">COPIAR CÓDIGO</button>
+                </div>
+            </div>
+
+            <!-- BOTÓN INFORMACIÓN -->
+            <button class="cs-btn" onclick="togglePanel('infoPanel')">
+                <span>INFORMACIÓN</span>
+            </button>
+
+            <!-- PANEL DESPLEGABLE DE INFORMACIÓN -->
+            <div class="info-panel" id="infoPanel">
+                <h3>REQUISITOS DEL SISTEMA</h3>
+                <p>• <strong>OS:</strong> Windows XP / 7 / 8 / 10 / 11</p>
+                <p>• <strong>Procesador:</strong> 500 MHz o superior</p>
+                <p>• <strong>Memoria RAM:</strong> 96 MB RAM</p>
+                <p>• <strong>Gráficos:</strong> Tarjeta de video 16 MB</p>
+                <p>• <strong>FPS:</strong> Optimizado para 100 FPS estables.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>trampeka one tap los derechos reservados</p>
+    </footer>
+
+    <script>
+        function togglePanel(id) {
+            const panels = ['infoPanel', 'serversPanel', 'extrasPanel', 'steamPanel'];
+            
+            panels.forEach(panelId => {
+                const panel = document.getElementById(panelId);
+                if (panelId === id) {
+                    panel.classList.toggle('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            });
+        }
+
+        function switchTab(tabId, btn) {
+            const tabs = document.querySelectorAll('#extrasPanel .tab-content');
+            const btns = document.querySelectorAll('#extrasPanel .tab-btn');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            btns.forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function copyIp(text, btn) {
+            navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = '¡COPIADO!';
+            btn.style.background = '#28a745';
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = '#1a53ff';
+            }, 1500);
+        }
+
+        function copyCfg(elementId, btn) {
+            const cfgText = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(cfgText);
+            const originalText = btn.innerText;
+            btn.innerText = '¡CFG COPIADA!';
+            btn.style.background = '#28a745';
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = '#1a53ff';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
